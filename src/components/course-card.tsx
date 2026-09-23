@@ -1,4 +1,5 @@
 import type { Course, Student } from "@/lib/types";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,15 +19,16 @@ type CourseCardProps = {
   onUnenroll?: (courseId: string) => void;
 };
 
+// แสดงวันที่แบบ พ.ศ. ตาม Tips ในโจทย์ (Intl.DateTimeFormat + calendar: "buddhist")
 function formatThaiDate(iso?: string) {
   if (!iso) return "";
-  return new Date(iso).toLocaleString("th-TH", {
+  return new Intl.DateTimeFormat("th-TH-u-ca-buddhist", {
     day: "2-digit",
     month: "short",
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
-  });
+  }).format(new Date(iso));
 }
 
 export function CourseCard({
@@ -45,15 +47,16 @@ export function CourseCard({
             รหัสวิชา: {course.courseId} · ผู้สอน: {course.instructors.join(", ")}
           </CardDescription>
         </div>
-        <span
+        <Badge
+          variant={isEnrolled ? "default" : "secondary"}
           className={
             isEnrolled
-              ? "shrink-0 rounded-full bg-orange-100 px-2 py-0.5 text-xs text-orange-700"
-              : "shrink-0 rounded-full bg-purple-100 px-2 py-0.5 text-xs text-purple-700"
+              ? "shrink-0 bg-orange-100 text-orange-700 hover:bg-orange-100"
+              : "shrink-0 bg-purple-100 text-purple-700 hover:bg-purple-100"
           }
         >
           {isEnrolled ? "ลงทะเบียนแล้ว" : "เปิดรับ"}
-        </span>
+        </Badge>
       </CardHeader>
 
       {isEnrolled && (
