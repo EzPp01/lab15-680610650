@@ -16,6 +16,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import type { Course, Student } from "@/lib/types";
 
@@ -34,8 +35,6 @@ export function RegisterDialog({ availableCourses, student, onEnroll }: Register
   const [open, setOpen] = useState(false);
   const [courseId, setCourseId] = useState("");
   const [time, setTime] = useState(currentTime());
-
-  const selectedCourse = availableCourses.find((c) => c.courseId === courseId);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -62,21 +61,17 @@ export function RegisterDialog({ availableCourses, student, onEnroll }: Register
           <div className="space-y-2">
             <Label htmlFor="courseId">วิชา</Label>
             <Select value={courseId} onValueChange={(value) => setCourseId(value ?? "")}>
-              <SelectTrigger
-                id="courseId"
-                className="h-auto min-h-8 w-full items-start py-1.5 text-left [&_svg]:mt-1 [&_svg]:shrink-0"
-              >
-                <span
-                  className={
-                    selectedCourse
-                      ? "flex-1 whitespace-normal break-words text-left"
-                      : "flex-1 whitespace-normal break-words text-left text-muted-foreground"
-                  }
-                >
-                  {selectedCourse
-                    ? `${selectedCourse.courseId} – ${selectedCourse.courseTitle}`
-                    : "เลือกวิชา"}
-                </span>
+              <SelectTrigger id="courseId" className="h-auto w-full min-h-8 py-1.5">
+                <SelectValue
+                  placeholder="เลือกวิชา"
+                  style={{
+                    whiteSpace: "normal",
+                    overflow: "visible",
+                    display: "block",
+                    WebkitLineClamp: "unset",
+                    textAlign: "left",
+                  }}
+                />
               </SelectTrigger>
               <SelectContent>
                 {availableCourses.map((course) => (
