@@ -48,11 +48,11 @@ export function CourseCard({
           </CardDescription>
         </div>
         <Badge
-          variant={isEnrolled ? "default" : "secondary"}
+          variant="outline"
           className={
             isEnrolled
-              ? "shrink-0 bg-orange-100 text-orange-700 hover:bg-orange-100"
-              : "shrink-0 bg-purple-100 text-purple-700 hover:bg-purple-100"
+              ? "shrink-0 border-transparent bg-amber-100 text-amber-700 dark:bg-purple-500/20 dark:text-purple-300"
+              : "shrink-0 border-transparent bg-purple-100 text-purple-700 dark:bg-amber-500/20 dark:text-amber-300"
           }
         >
           {isEnrolled ? "ลงทะเบียนแล้ว" : "เปิดรับ"}
