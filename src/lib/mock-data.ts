@@ -70,7 +70,7 @@ export const currentStudent = students.find(
 )!;
 
 export const currentUser = {
-  nickname: "กฤตภัทร์",
+  nickname: "PP",
   role: "STUDENT" as "STUDENT" | "ADMIN",
   avatar: "/public/สกรีนช็อต 2026-06-25 165320.png",
 };
