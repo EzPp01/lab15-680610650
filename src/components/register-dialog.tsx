@@ -61,8 +61,8 @@ export function RegisterDialog({ availableCourses, student, onEnroll }: Register
           <div className="space-y-2">
             <Label htmlFor="courseId">วิชา</Label>
             <Select value={courseId} onValueChange={(value) => setCourseId(value ?? "")}>
-              <SelectTrigger id="courseId">
-                <SelectValue placeholder="เลือกวิชา" />
+              <SelectTrigger id="courseId" className="w-full">
+                <SelectValue placeholder="เลือกวิชา" className="truncate" />
               </SelectTrigger>
               <SelectContent>
                 {availableCourses.map((course) => (
