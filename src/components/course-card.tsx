@@ -28,9 +28,11 @@ export function CourseCard({ course, student, enrolledAt }: CourseCardProps) {
             ชื่อ นศ.: {student.firstName} {student.lastName}
           </p>
           <p>โปรแกรม: {student.program}</p>
-          <p>ลงทะเบียนเมื่อ: {enrolledAt}</p>
         </div>
       </CardContent>
+      <CardFooter className="text-xs text-muted-foreground">
+        ลงทะเบียนเมื่อ: {enrolledAt}
+      </CardFooter>
     </Card>
   );
 }
