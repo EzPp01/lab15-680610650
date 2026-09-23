@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
-import { currentStudent } from "@/lib/mock-data";
 
 export default function HomePage() {
   return (
@@ -22,7 +21,7 @@ export default function HomePage() {
         </CardContent>
       </Card>
       <p className="text-center text-xs text-muted-foreground">
-        จัดทำโดย {currentStudent.firstName} {currentStudent.lastName} รหัสนักศึกษา {currentStudent.studentId}
+        จัดทำโดย กฤตภัทร์ การนา รหัสนักศึกษา 680610650
       </p>
     </div>
   );
