@@ -61,12 +61,16 @@ export function RegisterDialog({ availableCourses, student, onEnroll }: Register
           <div className="space-y-2">
             <Label htmlFor="courseId">วิชา</Label>
             <Select value={courseId} onValueChange={(value) => setCourseId(value ?? "")}>
-              <SelectTrigger id="courseId" className="w-full">
-                <SelectValue placeholder="เลือกวิชา" className="truncate" />
+              <SelectTrigger id="courseId" className="h-auto w-full min-h-8 py-1.5">
+                <SelectValue placeholder="เลือกวิชา" className="whitespace-normal text-left" />
               </SelectTrigger>
               <SelectContent>
                 {availableCourses.map((course) => (
-                  <SelectItem key={course.courseId} value={course.courseId}>
+                  <SelectItem
+                    key={course.courseId}
+                    value={course.courseId}
+                    className="whitespace-normal"
+                  >
                     {course.courseId} – {course.courseTitle}
                   </SelectItem>
                 ))}
