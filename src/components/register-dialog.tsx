@@ -11,30 +11,46 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import type { Course, Student } from "@/lib/types";
 
-export function RegisterDialog() {
-  const [open, setOpen] = useState(false); // true = แสดง Dialog
-  const [studentId, setStudentId] = useState("");
-  const [fullName, setFullName] = useState("");
+type RegisterDialogProps = {
+  availableCourses: Course[];
+  student: Student;
+  onEnroll: (courseId: string, time: string) => void;
+};
+
+function currentTime() {
+  const now = new Date();
+  return now.toTimeString().slice(0, 5); // "HH:mm"
+}
+
+export function RegisterDialog({ availableCourses, student, onEnroll }: RegisterDialogProps) {
+  const [open, setOpen] = useState(false);
   const [courseId, setCourseId] = useState("");
+  const [time, setTime] = useState(currentTime());
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault(); // ไม่ให้หน้าเว็บ reload
-    // TODO: ส่งข้อมูล studentId, fullName, courseId ไป backend ตรงนี้
-    setStudentId("");
-    setFullName("");
-    setCourseId(""); // เคลียร์ฟอร์ม
-    setOpen(false); // ปิด Dialog
+    e.preventDefault();
+    if (!courseId) return;
+    onEnroll(courseId, time);
+    setCourseId("");
+    setTime(currentTime());
+    setOpen(false);
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {/* ปุ่มที่กดแล้วเปิด Dialog */}
       <DialogTrigger>
         <Button>ลงทะเบียน</Button>
       </DialogTrigger>
 
-      {/* ฟอร์มที่แสดงออกมาเมื่อกดปุ่ม */}
       <DialogContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <DialogHeader>
@@ -43,37 +59,45 @@ export function RegisterDialog() {
           </DialogHeader>
 
           <div className="space-y-2">
-            <Label htmlFor="studentId">รหัสนักศึกษา</Label>
+            <Label htmlFor="courseId">วิชา</Label>
+            <Select value={courseId} onValueChange={(value) => setCourseId(value ?? "")}>
+              <SelectTrigger id="courseId">
+                <SelectValue placeholder="เลือกวิชา" />
+              </SelectTrigger>
+              <SelectContent>
+                {availableCourses.map((course) => (
+                  <SelectItem key={course.courseId} value={course.courseId}>
+                    {course.courseId} – {course.courseTitle}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="time">เลือกเวลา</Label>
             <Input
-              id="studentId"
-              value={studentId}
-              onChange={(e) => setStudentId(e.target.value)}
-              placeholder="เช่น 650610002"
+              id="time"
+              type="time"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="fullName">ชื่อ-นามสกุล</Label>
-            <Input
-              id="fullName"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              placeholder="เช่น Cillian Murphy"
-            />
+            <Label htmlFor="fullName">ชื่อ นศ.</Label>
+            <Input id="fullName" readOnly value={`${student.firstName} ${student.lastName}`} />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="courseId">รหัสวิชา</Label>
-            <Input
-              id="courseId"
-              value={courseId}
-              onChange={(e) => setCourseId(e.target.value)}
-              placeholder="เช่น 261207"
-            />
+            <Label htmlFor="program">โปรแกรม</Label>
+            <Input id="program" readOnly value={student.program} />
           </div>
 
           <DialogFooter>
-            <Button type="submit">ยืนยัน</Button>
+            <Button type="submit" disabled={!courseId}>
+              ยืนยันการลงทะเบียน
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
