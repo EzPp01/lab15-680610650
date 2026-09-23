@@ -4,13 +4,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function HomePage() {
   return (
-    <Card className="w-fit">
-      <CardHeader>
-        <CardTitle>ระบบลงทะเบียนเรียน CPE & ISNE</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Button render={<Link to="/enrollment" />}>ไปหน้าลงทะเบียนเรียน</Button>
-      </CardContent>
-    </Card>
+    <div className="flex justify-center pt-8">
+      <Card className="w-fit">
+        <CardHeader>
+          <CardTitle>ระบบลงทะเบียนเรียน CPE & ISNE</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Button render={<Link to="/enrollment" />}>ไปหน้าลงทะเบียนเรียน</Button>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
